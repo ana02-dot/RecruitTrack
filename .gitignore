@@ -1,0 +1,12 @@
+# Build results
+bin/
+obj/
+
+# Visual Studio files
+.vs/
+
+# Logs
+*.log
+
+# Environment files
+.env
