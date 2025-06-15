@@ -1,6 +1,8 @@
-﻿namespace JobSeekerAPI.Repositories
+﻿using JobSeekerAPI.Models;
+
+namespace JobSeekerAPI.Repositories
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T> where T : BaseEntity
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetByIdAsync(int id);
