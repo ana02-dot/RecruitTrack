@@ -31,17 +31,28 @@ namespace JobSeekerAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateUserDto dto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var user = new User
             {
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 Email = dto.Email,
-                HashedPassword = dto.HashedPassword,
+                HashedPassword = dto.Password,
                 Role = dto.Role
             };
 
             var success = await _userService.CreateUserAsync(user);
             return success ? CreatedAtAction(nameof(GetById), new { id = user.Id }, user) : StatusCode(500);
+        }
+        [HttpGet("email/{email}")]
+        public async Task<IActionResult> GetByEmail(string email)
+        {
+            var user = await _userService.GetUserByEmailAsync(email);
+            return Ok("User role is " + user.Role);
         }
     }
 }
