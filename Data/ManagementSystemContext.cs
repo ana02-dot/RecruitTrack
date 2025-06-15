@@ -18,6 +18,13 @@ namespace JobSeekerAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<JobPosting>()
+                .Property(j => j.Salary)
+                .HasPrecision(10, 2);
+
+            modelBuilder.Entity<JobApplication>()
+                .Property(ja => ja.Status);
+
             // User ↔ HR (One-to-One)
             modelBuilder.Entity<User>()
                 .HasOne(u => u.HRProfile)
@@ -46,9 +53,7 @@ namespace JobSeekerAPI.Data
                 .HasForeignKey(j => j.HRId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<JobApplication>()
-                .HasKey(ja => ja.Id); //PK
-
+            // JobApplication relationships
             modelBuilder.Entity<JobApplication>()
                 .HasOne(ja => ja.Applicant)
                 .WithMany(a => a.JobApplications)
@@ -59,7 +64,7 @@ namespace JobSeekerAPI.Data
                 .HasOne(ja => ja.JobPosting)
                 .WithMany(jp => jp.JobApplications)
                 .HasForeignKey(ja => ja.JobPostingId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);
         }
