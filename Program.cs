@@ -1,8 +1,7 @@
-
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using JobSeekerAPI.Data;
 using JobSeekerAPI.Dtos;
-using JobSeekerAPI.Models;
 using JobSeekerAPI.Repositories;
 using JobSeekerAPI.Services;
 using JobSeekerAPI.Validators;
@@ -22,6 +21,8 @@ builder.Services.AddScoped<IValidator<CreateUserDto>, CreateUserDtoValidator>();
 
 builder.Services.AddControllers();
 
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
 
 builder.Services.AddDbContext<ManagementSystemContext>(options =>
 {
