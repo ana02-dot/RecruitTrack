@@ -48,11 +48,48 @@ namespace JobSeekerAPI.Controllers
             var success = await _userService.CreateUserAsync(user);
             return success ? CreatedAtAction(nameof(GetById), new { id = user.Id }, user) : StatusCode(500);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, CreateUserDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var existingUser = await _userService.GetUserByIdAsync(id);
+            if (existingUser == null)
+            {
+                return NotFound();
+            }
+
+            existingUser.FirstName = dto.FirstName;
+            existingUser.LastName = dto.LastName;
+            existingUser.Email = dto.Email;
+            existingUser.HashedPassword = dto.Password;
+            existingUser.Role = dto.Role;
+
+            await _userService.UpdateUserAsync(existingUser);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var user = await _userService.GetUserByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            await _userService.DeleteUserAsync(id);
+            return NoContent();
+        }
+
         [HttpGet("email/{email}")]
         public async Task<IActionResult> GetByEmail(string email)
         {
             var user = await _userService.GetUserByEmailAsync(email);
-            return Ok("User role is " + user.Role);
+            return Ok("User role is " + user?.Role);
         }
     }
 }
