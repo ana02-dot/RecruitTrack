@@ -25,5 +25,29 @@ namespace JobSeekerAPI.Services
             await _userRepository.AddAsync(user);
             return await _userRepository.SaveChangesAsync();
         }
+
+        public async Task UpdateUserAsync(User user)
+        {
+            var userToUpdate = await _userRepository.GetByIdAsync(user.Id);
+            if (userToUpdate != null)
+            {
+                userToUpdate.FirstName = user.FirstName;
+                userToUpdate.LastName = user.LastName;
+                userToUpdate.Email = user.Email;
+                userToUpdate.Role = user.Role;
+                _userRepository.Update(userToUpdate);
+                await _userRepository.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteUserAsync(int id)
+        {
+            var userToDelete = await _userRepository.GetByIdAsync(id);
+            if (userToDelete != null)
+            {
+                _userRepository.Delete(userToDelete);
+                await _userRepository.SaveChangesAsync();
+            }
+        }
     }
 }
