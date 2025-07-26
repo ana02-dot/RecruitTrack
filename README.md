@@ -66,19 +66,13 @@ JobSeekerAPI/
 
 ## Future Improvements
 
-- [ ] Authentication & Authorization (JWT)
-- [ ] Password hashing (BCrypt)
-- [ ] API versioning
-- [ ] Caching layer
-- [ ] Rate limiting
-- [ ] Background job processing
-- [ ] Email notifications
-- [ ] File upload functionality
-- [ ] Advanced search and filtering
-- [ ] Audit logging
-
-
-
-## License
-
-This project is licensed under the MIT License. 
+-  Authentication & Authorization (JWT)
+-  Password hashing (BCrypt)
+-  API versioning
+-  Caching layer
+-  Rate limiting
+-  Background job processing
+-  Email notifications
+-  File upload functionality
+-  Advanced search and filtering
+-  Audit logging
